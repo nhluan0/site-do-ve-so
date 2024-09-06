@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <!--   add fontawesome-->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!--add jquery-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <!--    css     -->
+  <link rel="stylesheet" th:href="@{/css/header-share.css}">
+    <title>Chi tiết một kết quả xổ số</title>
+
+
+</head>
+<body>
+
+<<!--header chung-->
+<ul class="header__content" >
+  <li id="iconMenuBar"><a href="#" ><i class="fas fa-bars" style="margin-left:0.5rem"></i></a></li>
+  <li class="header-laptop"><a th:href="@{/us/trang-chu}" ><i class="fas fa-home"></i></a></li>
+  <li class="header-laptop"><a th:href="@{/ad/dai-ve-so}" >Đài Vé Số</a></li>
+  <li class="header-laptop"><a th:href="@{/ad/showUser}" >Người Dùng</a></li>
+  <li class="header-laptop"><a th:href="@{/ad/showListKq}" >Vé Số</a></li>
+  <li class="header-laptop"><a th:href="@{/ad/lich-su-do-so}" >Lịch Sử Dò</a></li>
+
+
+  <li class="dropDown--li header-laptop">
+    <div class="header__dropdown">
+      <span><a href="#">Thêm</a></span>
+      <div class="header__dropdown--content">
+        <p><a th:href="@{/ad/add-user}">Nguời Dùng</a></p>
+        <p><a th:href="@{/ad/add-kqxs}">Vé Số</a></p>
+        <p><a th:href="@{/ad/add-dai-xo-so}">Đài Vé Số</a></p>
+      </div>
+    </div>
+  </li>
+  <!--user đã xác thực thì hiện logout-->
+  <li sec:authorize="isAuthenticated()">
+    <form action="#" th:action="@{/logout}" method="post">
+      <span>Chào</span>
+      <span sec:authentication="principal.username"></span>
+      <input type="submit" value="thoát">
+    </form>
+  </li>
+</ul>
+
+<!-- slide bar mobile-->
+<ul class="slideBar__mobile">
+
+  <li ><a th:href="@{/us/trang-chu}" >Trang chủ</a></li>
+  <i class="fas fa-times icon__close"></i>
+  <li ><a th:href="@{/ad/dai-ve-so}" >Đài Vé Số</a></li>
+  <li ><a th:href="@{/ad/showUser}" >Người Dùng</a></li>
+  <li ><a th:href="@{/ad/showListKq}" >Vé Số</a></li>
+  <li ><a th:href="@{/ad/lich-su-do-so}" >Lịch Sử Dò</a></li>
+  <li ><a th:href="@{/ad/add-dai-xo-so}" >Thêm Đài Vé Số</a></li>
+  <li ><a th:href="@{/ad/add-user}" >Thêm Người Dùng</a></li>
+  <li ><a th:href="@{/ad/add-kqxs}" >Thêm vé số</a></li>
+</ul>
+<div class="container">
+  <h4>Vé Số <span th:text="${kqxs.daiXoSo.nameLottery}"/> Ngày <span th:text="${kqxs.dateLottery}"/> </h4>
+
+<!--  Bảng vé số -->
+  <div class="table-responsive-xl">
+
+    <table class="table table-bordered table-striped">
+      <thead class="table-dark">
+      <tr>
+        <th>STT</th>
+        <th style="min-width:133px">Tên Đài</th>
+        <th style="min-width:60px">Giải 8</th>
+        <th style="min-width:60px">Giải 7</th>
+        <th style="min-width:60px">Giải 6</th>
+        <th style="min-width:60px">Giải 5</th>
+        <th style="min-width:60px">Giải 4</th>
+        <th style="min-width:60px">Giải 3</th>
+        <th style="min-width:60px">Giải 2</th>
+        <th style="min-width:60px">Giải 1</th>
+        <th style="min-width:80px">Đặc Biệt</th>
+        <th style="min-width:120px">Ngày Xố Số</th>
+
+      </tr>
+      </thead>
+      <tbody >
+      <tr >
+        <td th:text="1"/>
+
+
+        <td th:text="${kqxs.daiXoSo.nameLottery}"/>
+        <td th:text="${kqxs.g8}"/>
+        <td th:text="${kqxs.g7}"/>
+        <td >
+          <p th:text="${kqxs.g61}"></p>
+          <p th:text="${kqxs.g62}"></p>
+          <p th:text="${kqxs.g63}"></p>
+        </td>
+        <td th:text="${kqxs.g5}"/>
+        <td >
+          <p th:text="${kqxs.g41}"></p>
+          <p th:text="${kqxs.g42}"></p>
+          <p th:text="${kqxs.g43}"></p>
+          <p th:text="${kqxs.g44}"></p>
+          <p th:text="${kqxs.g45}"></p>
+          <p th:text="${kqxs.g46}"></p>
+          <p th:text="${kqxs.g47}"></p>
+        </td>
+        <td >
+          <p th:text="${kqxs.g31}"></p>
+          <p th:text="${kqxs.g32}"></p>
+        </td>
+        <td th:text="${kqxs.g2}"/>
+        <td th:text="${kqxs.g1}"/>
+        <td th:text="${kqxs.db}"/>
+        <td th:text="${kqxs.dateLottery}"/>
+
+      </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+<!--Bảng người tạo-->
+  <h5>Người tạo</h5>
+  <div class="table-responsive-xl">
+
+    <table class="table table-bordered table-striped">
+      <thead class="table-dark">
+      <tr>
+        <th>STT</th>
+        <th style="min-width:150px">Ngày Tạo Xổ Số</th>
+        <th>Tên</th>
+        <th>Họ</th>
+        <th>UserName</th>
+        <th>Email</th>
+        <th style="min-width:133px">Số điện thoại</th>
+        <th style="min-width:133px">Ngày Đăng ký</th>
+        <th>Vai Trò</th>
+
+      </tr>
+      </thead>
+      <tbody >
+      <tr >
+        <td th:text="1"/>
+        <td th:text="${kqxs.dateCreated}"/>
+        <td th:text="${kqxs.user.firstName}"/>
+        <td th:text="${kqxs.user.lastName}"/>
+        <td th:text="${kqxs.user.userName}"/>
+        <td th:text="${kqxs.user.email}"/>
+        <td th:text="${kqxs.user.phoneNumber}"/>
+
+        <td th:text="${kqxs.user.registerDate}"/>
+        <td th:text="${kqxs.user.role.getRole()}"/>
+
+      </tr>
+
+
+      </tbody>
+
+    </table>
+
+  </div>
+  <h5>Người sửa</h5>
+  <div class="table-responsive-xl" >
+
+    <table class="table table-bordered table-striped">
+      <thead class="table-dark">
+      <tr>
+        <th>STT</th>
+        <th style="min-width:150px">Ngày Sửa Xổ Số</th>
+        <th>Tên</th>
+        <th>Họ</th>
+        <th>UserName</th>
+        <th>Email</th>
+        <th style="min-width:133px">Số điện thoại</th>
+        <th style="min-width:133px">Ngày Đăng ký</th>
+        <th>Vai Trò</th>
+
+      </tr>
+      </thead>
+      <tbody >
+      <tr th:each="ls,stt : ${lss}">
+        <td th:text="${stt.count}"/>
+        <td th:text="${ls.ngaySua}"/>
+        <td th:text="${ls.user.firstName}"/>
+        <td th:text="${ls.user.lastName}"/>
+        <td th:text="${ls.user.userName}"/>
+        <td th:text="${ls.user.email}"/>
+        <td th:text="${ls.user.phoneNumber}"/>
+
+        <td th:text="${ls.user.registerDate}"/>
+        <td th:text="${ls.user.role.getRole()}"/>
+
+      </tr>
+
+      </tbody>
+
+    </table>
+</div>
+</div>
+<!--js an hien slide bar mobile-->
+<script th:src="@{/js/share-header.js}"></script>
+</body>
+</html>

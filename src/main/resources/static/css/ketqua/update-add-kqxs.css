@@ -1,0 +1,148 @@
+*{
+    padding:0;
+    margin:0;
+    box-sizing:border-box;
+}
+h4{
+    padding-top: 1rem;
+    text-shadow: 1px 1px 0 #444;
+    text-transform: uppercase;
+    opacity:0.7;
+    text-align:center;
+}
+#g3Error, #g4Error,#g6Error,.error-g4,.error-g6,.error-g3{
+    display:none;
+}
+select:focus,
+input:focus {
+    outline:none;
+    border:none;
+}
+.list_active{
+    background-color:azure;
+}
+.container{
+    padding: 2rem 0;
+}
+#add_tblKetqua {
+    overflow: hidden;
+}
+.container_udTblKetqua {
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(to top right, #FFFFFF, #C0C0C0);
+
+}
+.div_Content{
+    margin:auto;
+}
+
+form#form_tblKetqua {
+    width: 70%;
+    margin-top: 10px;
+}
+.error-kq{
+    padding-left: 1rem;
+}
+.div_column .div_inputTblKetqua {
+    width: 100%;
+    display: flex;
+    border: 1px solid;
+    overflow: hidden;
+    background-color: #C0C0C0;
+    padding: 5px;
+}
+
+.div_inputTblKetqua .labelKq {
+    background-color: white;
+    width: 28%;
+    padding-left: 10px;
+    border-radius: 5px;
+    color: #CC6699;
+    font-size: 20px;
+}
+
+.div_inputTblKetqua  .inputKq {
+    width: 72%;
+}
+
+.inputKq input, .labelKq input {
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    display: block;
+    width: 100%;
+}
+
+.labelKq input {
+    border: none;
+}
+
+.div_input {
+    display: flex;
+}
+
+#div_input4 {
+    width: 100%;
+    display: flex;
+}
+
+#div_input4 input {
+    height: 30px;
+}
+
+#erroKetqua, #valitblKetqua {
+    color: red;
+    padding: 5px;
+}
+
+#valitblKetqua {
+    display: none;
+}
+
+#btnOkTblKetqua {
+    border: none;
+    background-color: #FFCCCC;
+    margin: 0 5px;
+}
+
+#btnrs_tblKetqua {
+    border: none;
+    background-color: #FFCCCC;
+    border-radius: 5px;
+}
+
+#btnrs_tblKetqua:hover, #btnOkTblKetqua:hover {
+    background-color: #996666;
+    color: white;
+}
+
+.div_btnTblKetqua {
+    margin: 5px 0px;
+}
+
+.divError {
+    color: red;
+    padding-left: 5px;
+}
+
+@media screen and (max-width:1190px) {
+    .div_inputTblKetqua .labelKq {
+        width: 40%;
+    }
+    .div_inputTblKetqua  .inputKq {
+        width: 60%;
+    }
+}
+
+@media screen and (max-width: 930px) {
+    form#form_tblKetqua {
+        width: 98%;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    form#form_tblKetqua {
+        width: 98%;
+    }
+}

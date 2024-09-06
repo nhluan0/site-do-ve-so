@@ -1,0 +1,49 @@
+#container-do-ve{
+    margin:1rem 0;
+}
+.form-doSo button{
+    margin-left:0.7rem;
+}
+.dove-input{
+    display:flex;
+    align-items:center;
+    justify-content:flex-start;
+    margin:0.5rem;
+}
+.dove-input span{
+    display:inline-block;
+    width:25%;
+    vertical-align:middle;
+    align-items:flex-start;
+    padding:0.2rem;
+    min-width:130px;
+}
+.dove-input input,
+.dove-input select{
+    display:inline-block;
+    border-radius:5px;
+    border:1px solid #dee2e6;
+    align-items:flex-start;
+    padding:0.2rem;
+    width:194px;
+    min-width:194px;
+
+}
+.dove-input input:focus{
+    outline:none;
+}
+p{
+    margin-bottom:0;
+}
+.container__content__search{
+    border:1px solid #dee2e6;
+    box-shadow: 1px 1px 2px 2px #dee2e6;
+    padding:2rem;
+    margin:0.5rem;
+    background-color:whitesmoke;
+    border-radius:5px;
+}
+.container__content__search h6{
+    font-size:1.1rem;
+    font-weight:bold;
+}

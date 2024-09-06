@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Default Security</title>
+</head>
+<body>
+<h2>Trang điều hướng</h2>
+<hr>
+<div>Chào mừng <span sec:authentication="principal.username"></span>
+    đến với xổ số vịt ù
+</div>
+
+<div sec:authorize="hasRole('USER')">
+    <a th:href ="@{/us/trang-chu}">Trang Chủ</a>
+</div>
+
+
+
+<div sec:authorize="hasRole('ADMIN')">
+    <hr>
+    <a th:href ="@{/us/trang-chu}">Trang Chủ</a>
+</div>
+
+
+
+<div sec:authorize="hasRole('ADMIN')">
+    <hr>
+    <a th:href ="@{/ad/showUser}">Đi đến trang quản lý</a>
+</div>
+<hr>
+<div>Mừng bạn đến với xổ số Vịt Ù</div>
+<hr>
+<form action="#" th:action="@{/logout}" method="post">
+    <input type="submit" value="Logout">
+</form>
+</body>
+</html>

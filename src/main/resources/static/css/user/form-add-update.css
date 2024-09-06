@@ -1,0 +1,12 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+.pr-container{
+    margin-top:3rem ;
+    margin-bottom:1rem;
+}
+#loginbox{
+    margin:auto;
+}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <!--   add fontawesome-->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!--add jquery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- jQuery UI CSS CDN -->
+    <link href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css'
+          rel='stylesheet'>
+    <!-- jQuery UI JS CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js">
+    </script>
+    <!--font google-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400&display=swap">
+    <!--    css     -->
+    <link rel="stylesheet" th:href="@{/css/dangnhap/login.css}">
+    <title>Đăng Nhập</title>
+    <style>
+        .login-gf:hover {
+            opacity:0.8;
+            cursor:pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container__login">
+
+        <div class="container__login__content">
+            <h5>Đăng nhập</h5>
+            <div class="login-gf " style="background-color:#0d6efd;border-radius:5px">
+                <a th:href="@{/dang-nhap/oauth2/authorization/google}" class="btn" style="color:white;  font-weight:bold; display:block;width:100%">Google</a>
+
+            </div>
+            <div class="login-gf " style="background-color:#0d6efd;margin-top:0.5rem;border-radius:5px">
+                <a th:href="@{/dang-nhap/oauth2/authorization/facebook}" class="btn" style="color:white;font-weight:bold; display:block;width:100%">facebook</a>
+            </div>
+            <div style="margin-bottom:0.5rem">hoặc</div>
+            <form action="#" th:action = "@{/authenticateTheUser}" method="post" >
+                <!-- check thay đổi mậ khẩu có thành công không -->
+                <div class="error text-danger" th:if="${messSuccess}">
+                    <p th:text="${messSuccess}"/>
+                </div>
+                <!-- check has error-->
+                <div class="error text-danger" th:if="${param.error}">
+                    <p>Tên đăng nhập hoặc mật khẩu không đúng</p>
+                </div>
+                <!-- check logout-->
+                <div class="error text-danger" th:if="${param.logout}">
+                    <p>Bạn đã thoát khỏi hệ thống</p>
+                </div>
+                <!-- check email xác thực-->
+                <div class="error text-danger" th:if="${messValid}">
+                    <p th:text="${messValid}"/>
+                </div>
+                <!-- check mess thông báo xác thực email-->
+                <div class="error text-danger" th:if="${valid}">
+                    <p>Vui lòng xác nhận email hoàn tất đăng ký</p>
+                </div>
+
+                <input type="text" name="username" placeholder="Email hoặc tên đăng nhập">
+                <input type="password" name="password" placeholder="Mật khẩu">
+                <button class="btn btn-primary" type="submit">Đăng nhập</button>
+            </form>
+            <hr>
+
+
+            <div class="login_-forget--pw" style="display:flex;justify-content:space-around">
+                <a th:href="@{/us/quen-pw}">Quên mật khẩu</a>
+                <a th:href="@{/us/doi-pw}">Đổi mật khẩu</a>
+            </div>
+
+            <div class="login__createNewAccount">
+                <a class="btn btn-success" th:href="@{/us/dang-ky-moi}">Tạo Mới Tài Khoản</a>
+            </div>
+            <div class="login_-forget--pw" style="margin-top:1rem;">
+                <a th:href="@{/us/trang-chu}"><i class="fas fa-home" style="font-size:1.5rem;opacity:0.8"></i></a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

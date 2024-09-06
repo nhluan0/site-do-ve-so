@@ -1,0 +1,83 @@
+.container__login{
+
+    text-align:center;
+    display:flex;
+    padding-top:5rem;
+
+}
+
+.container__login__content{
+    margin:auto;
+    vertical-align:middle;
+    border:1px solid #d0d0d0;
+    border-radius:10px;
+    box-shadow:0 1px 1px 1px #d0d0d0;
+    padding:1rem;
+    background-color:whitesmoke;
+
+}
+.error{
+    text-align:left !important;
+    padding-left:0.3rem;
+    align-items:flex-start;
+}
+p{
+    text-align:left;
+}
+.container__login__content form{
+    width:25vw;
+    min-width:25vw;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+}
+.container__login__content form input{
+    width:100%;
+    border-radius:5px;
+    border:1px solid #d0d0d0;
+    height:2.5rem;
+    padding-left:0.3rem;
+}
+.container__login__content form button{
+    width:100%;
+    border-radius:5px;
+    margin:1rem 0;
+    font-weight:bold;
+    font-size:1.1rem;
+}
+.container__login__content form input+input{
+    margin-top:1rem;
+}
+.container__login__content form input:focus{
+    outline:#0000ff;
+}
+.login_-forget--pw {
+
+}
+
+a{
+    text-decoration:none;
+}
+.login__createNewAccount{
+    margin-top:1rem;
+}
+.login__createNewAccount a{
+    font-size:1.1rem;
+    font-weight:bold;
+}
+@media(max-width:47rem){
+    .container__login__content form{
+        width:70vw;
+        min-width:70w;
+    }
+}
+@media(min-width:753px ) and (max-width:1300px){
+    .container__login__content form{
+        width:50vw;
+        min-width:50vw;
+    }
+}
+
+

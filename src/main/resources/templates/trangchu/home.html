@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <!--   add fontawesome-->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!--add jquery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- jQuery UI CSS CDN -->
+    <link href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css'
+          rel='stylesheet'>
+    <!-- jQuery UI JS CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js">
+    </script>
+    <!--font google-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400&display=swap">
+    <!--    css     -->
+
+    <link rel="stylesheet" th:href="@{/css/trangchu/header-chung.css}">
+    <link rel="stylesheet" th:href="@{/css/trangchu/home.css}">
+
+    <title>Xổ Số Vịt Ù</title>
+</head>
+<body>
+<!--header chung -->
+<div class="container__header">
+    <ul class="container__header__ul">
+        <li >
+
+            <a id="icon_home" style="display:none" href="#"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="home_chu">
+            <a th:href="@{/us/trang-chu}">Trang Chủ</a>
+        </li>
+        <li class="home_chu">
+            <a th:href="@{/us/trang-chu/khuvuc(mien='Miền Nam')}">XSMN</a>
+        </li>
+        <li class="home_chu">
+            <a th:href="@{/us/trang-chu/khuvuc(mien='Miền Trung')}">XSMT</a>
+        </li>
+        <li class="home_chu">
+            <a th:href="@{/us/do-ve-so}">Dò Vé Số</a>
+        </li>
+        <li sec:authorize="hasRole('USER') or hasRole('ADMIN')" class="home_chu">
+            <a th:href="@{/us/lich-su-do}">Lịch Sử Dò</a>
+        </li>
+        <li sec:authorize="hasRole('ADMIN')" class="home_chu">
+            <a th:href="@{/ad/showUser}">Trang quản lý</a>
+        </li>
+        <!-- user chua xac thuc thì hiện login-->
+        <li sec:authorize="isAnonymous()">
+            <a th:href="@{/dang-nhap}" >Login</a>
+        </li>
+
+        <!--user đã xác thực thì hiện logout-->
+        <li sec:authorize="isAuthenticated()">
+            <form action="#" th:action="@{/logout}" method="post">
+                <span>Chào</span>
+                <span sec:authentication="principal.username" id="span__username"></span>
+                <input type="submit" value="thoát">
+            </form>
+        </li>
+
+    </ul>
+
+
+
+</div>
+<div class="mobile" >
+
+</div>
+
+<!-- phan slide bar mobile -->
+<ul class="header__mobile">
+    <i class="fas fa-times icon-close"></i>
+    <li >
+        <a th:href="@{/us/trang-chu}">Trang Chủ</a>
+    </li>
+    <li >
+        <a th:href="@{/us/trang-chu/khuvuc(mien='Miền Nam')}">XSMN</a>
+    </li>
+    <li >
+        <a th:href="@{/us/trang-chu/khuvuc(mien='Miền Trung')}">XSMT</a>
+    </li>
+    <li>
+        <a th:href="@{/us/do-ve-so}">Dò Vé Số</a>
+    </li>
+    <li sec:authorize="hasRole('USER') or hasRole('ADMIN')">
+        <a th:href="@{/us/lich-su-do}">Lịch Sử Dò</a>
+    </li>
+    <li sec:authorize="hasRole('ADMIN')" >
+        <a th:href="@{/ad/showUser}">Trang quản lý</a>
+    </li>
+</ul>
+
+<!-- form an de gui du lieu len server khi chon nut select-->
+<form id="formSelect" action="#" th:action="@{/us/chon-dai}" method="get" style="display:none">
+    <input type="text" name ="tenDai" value="" id="tenDai">
+    <input type="text" name="date" value="" id="date-xs">
+    <input type="submit" value="Luan gia">
+</form>
+<!-- input giu gia tri nut select sau khi tim kiem bang khu vuc , hay ten dai va cho hien thi lai tren nut select -->
+<input type="hidden" th:value="${tenDai}" id="inputHoldDateSelect">
+<!-- input giu gia tri ngay xo so-->
+<input type="hidden" th:value="${dateXs}" id="inputHoldDateXs">
+<div class="container__content">
+
+    <!-- slide left-->
+
+    <div class="container__content__slideLeft" th:if="${#lists.size(khuVucList) > 0}" >
+        <div  class="content__slideLeft__mien" th:each="aria : ${khuVucList}">
+            <h6><a th:href="@{/us/trang-chu/khuvuc(mien=${aria})}" th:text="${'Xổ Số ' + aria}"/></h6>
+            <ul>
+                <li th:each="theDai : ${daiXoSoList}" th:if="${theDai.aria == aria}" >
+                    <a th:href="@{/us/trang-chu/dai(daiVeSo=${theDai.nameLottery})}" th:text="${'Xổ Số '+ theDai.nameLottery}"/>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- main content -->
+    <di class="container__content__main">
+        <div class="content__main__filter">
+            <select id="select__pick--Dai" >
+                <option value="1">Chọn đài</option>
+                <option th:if="${#lists.size(khuVucList) >0}" th:each="aria:${khuVucList}"
+                        th:text="${aria}" th:value="${aria}"/>
+
+                <option th:if="${#lists.size(daiXoSoList) >0}" th:each="theDai:${daiXoSoList}"
+                        th:text="${theDai.nameLottery}" th:value="${theDai.nameLottery}"/>
+            </select>
+            <input id="input__datePicker" type="text" placeholder="dd/mm/yyyy" readonly >
+            <i class="far fa-calendar-alt" id="icon__calender"></i>
+        </div>
+
+        <!-- hien thi ket qua xo lan load trang dau tien -->
+        <!-- check theo list khu vực có dữ liệu -->
+
+        <div class="content__main__table" th:if="${#lists.size(listKetQuaXoSo) > 0}"
+             th:each ="theListKqXs : ${listKetQuaXoSo}">
+            <!-- div dung de bat su kien input de lay du lieu vau do hien thi -->
+            <div  class="content__main__table__show table-responsive-xl" th:if="${#lists.size(khuVucList1) > 0}" th:each ="aria:${khuVucList1}" >
+
+                <!-- hien thi table co day du ket qua -->
+                <table th:class="${aria}+' table table-bordered table__main'" >
+
+                    <!--div hien thi header content table kqXs-->
+                    <div   class="header__table"  >
+                        <p  th:each ="kqXs:${theListKqXs}" th:if="${kqXs.daiXoSo.aria == aria}"
+                            th:text ="'Kết Quả Xổ Số ' + ${aria} +' '+${kqXs.dateLottery}" style="margin-bottom:0;display:none"/>
+                    </div>
+
+                    <thead>
+                    <tr>
+                        <td class="td_font_normal">Giải</td>
+                        <th scope="col" th:each ="kqXs:${theListKqXs}" th:if="${kqXs.daiXoSo.aria == aria}" th:text="${kqXs.daiXoSo.nameLottery}"/>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="td_font_normal " >Giải Tám</td>
+                        <td class="text-danger g8" th:each ="kqXs:${theListKqXs}" th:if="${kqXs.daiXoSo.aria == aria}" th:text="${kqXs.g8}"/>
+                    </tr>
+                    <tr>
+                        <td class="td_font_normal" >Giải 7</td>
+                        <td class="g7" th:each ="kqXs:${theListKqXs}" th:if="${kqXs.daiXoSo.aria == aria}" th:text="${kqXs.g7}"/>
+                    </tr>
+                    <tr>
+                        <td class="td_font_normal" >Giải sáu</td>
+                        <td th:each ="kqXs:${theListKqXs}" th:if="${kqXs.daiXoSo.aria == aria}" >
+                            <p class="g61" th:text="${kqXs.g61}"/>
+                            <p class="g62" th:text="${kqXs.g62}"/>
+                            <p class="g63" th:text="${kqXs.g63}"/>
+
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td class="td_font_normal" >Giải năm</td>
+                        <td class="g5" th:each ="kqXs:${theListKqXs}" th:if="${kqXs.daiXoSo.aria == aria}" th:text="${kqXs.g5}"/>
+                    </tr>
+                    <tr>
+                        <td class="td_font_normal" >Giải tư</td>
+                        <td th:each ="kqXs:${theListKqXs}" th:if="${kqXs.daiXoSo.aria == aria}" >
+                            <p class="g41" th:text="${kqXs.g41}"/>
+                            <p class="g42" th:text="${kqXs.g42}"/>
+                            <p class="g43" th:text="${kqXs.g43}"/>
+                            <p class="g44" th:text="${kqXs.g44}"/>
+                            <p class="g45" th:text="${kqXs.g45}"/>
+                            <p class="g46" th:text="${kqXs.g46}"/>
+                            <p class="g47" th:text="${kqXs.g47}"/>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td class="td_font_normal" >Giải ba</td>
+                        <td th:each ="kqXs:${theListKqXs}" th:if="${kqXs.daiXoSo.aria == aria}" >
+                            <p class="g31" th:text="${kqXs.g31}"/>
+                            <p class="g32" th:text="${kqXs.g32}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td_font_normal" >Giải nhì</td>
+                        <td  class="g2" th:each ="kqXs:${theListKqXs}" th:if="${kqXs.daiXoSo.aria == aria}" th:text="${kqXs.g2}" >
+                    </tr>
+                    <tr>
+                        <td class="td_font_normal" >Giải nhất</td>
+                        <td class="g1" th:each ="kqXs:${theListKqXs}" th:if="${kqXs.daiXoSo.aria == aria}" th:text="${kqXs.g1}" >
+                    </tr>
+                    <tr>
+                        <td class="td_font_normal " >Đặc biệt</td>
+                        <td class="text-danger gdb" th:each ="kqXs:${theListKqXs}" th:if="${kqXs.daiXoSo.aria == aria}" th:text="${kqXs.db}" >
+                    </tr>
+
+                    </tbody>
+                </table>
+                <!--phan hien thi cac nut radio-->
+                <div class="radio__option ">
+                    <div class="container__radio" th:each ="kqXs:${theListKqXs}" th:if="${kqXs.daiXoSo.aria == aria}" style="display:none">
+
+                        <input class="input__checkBox" type="radio" th:name="${aria + kqXs.dateLottery}" th:id="${aria + kqXs.dateLottery}+' day du'" checked value ="full">
+                        <label th:for="${aria  + kqXs.dateLottery} +' day du'" >Đầy Đủ</label>
+
+                        <input class="input__checkBox" type="radio" th:name="${aria + kqXs.dateLottery}" th:id="${aria + kqXs.dateLottery}+' 2so'" value ="2 so">
+                        <label th:for="${aria + kqXs.dateLottery}+' 2so'">2 số</label>
+
+                        <input class="input__checkBox" type="radio" th:name="${aria + kqXs.dateLottery}" th:id="${aria + kqXs.dateLottery}+' 3so'" value ="3 so">
+                        <label th:for="${aria + kqXs.dateLottery}+' 3so'">3 số</label>
+                    </div>
+                </div>
+
+
+                <!-- phần hiển thị lô tô -->
+                <div class="container__loto">
+                    <div class="loto">
+                        <span th:each ="kqXs :${theListKqXs}" th:if="${kqXs.daiXoSo.aria == aria}" th:text ="${kqXs.daiXoSo.nameLottery}"/>
+                    </div>
+
+                    <!-- div hien thi noi dung tableloto-->
+                    <div class="content_container--loto" ></div>
+
+                    <!--phần hiển thị các số lô tô-->
+                    <div  style="display:none" th:each ="kqXs :${theListKqXs}" th:if="${kqXs.daiXoSo.aria == aria}"
+                          class="container__loto__table" >
+
+                        <div class="header__table" th:text="'Lô Tô '+${kqXs.daiXoSo.nameLottery} +' '+${kqXs.dateLottery}"/>
+
+                        <!-- the input giu class cac the span chua cac so data loto-->
+                        <input type="hidden" class="input__loTo__tenDai" th:value="${kqXs.daiXoSo.nameLottery+kqXs.dateLottery}"/>
+                        <!--Phan hien thi cac so loto-->
+                        <div class="kqLoTo" >
+                            <span th:class="${kqXs.daiXoSo.nameLottery + kqXs.dateLottery}" th:text ="${kqXs.g8}" />
+                            <span th:class="${kqXs.daiXoSo.nameLottery + kqXs.dateLottery}" th:text="${#strings.substring(kqXs.g7,1,3)}"/>
+                            <span th:class="${kqXs.daiXoSo.nameLottery + kqXs.dateLottery}" th:text="${#strings.substring(kqXs.g61,2,4)}"/>
+                            <span th:class="${kqXs.daiXoSo.nameLottery + kqXs.dateLottery}" th:text="${#strings.substring(kqXs.g62,2,4)}"/>
+                            <span th:class="${kqXs.daiXoSo.nameLottery + kqXs.dateLottery}" th:text="${#strings.substring(kqXs.g63,2,4)}"/>
+                            <span th:class="${kqXs.daiXoSo.nameLottery + kqXs.dateLottery}" th:text="${#strings.substring(kqXs.g5,2,4)}"/>
+                            <span th:class="${kqXs.daiXoSo.nameLottery + kqXs.dateLottery}" th:text="${#strings.substring(kqXs.g41,3,5)}"/>
+                            <span th:class="${kqXs.daiXoSo.nameLottery + kqXs.dateLottery}" th:text="${#strings.substring(kqXs.g42,3,5)}"/>
+                            <span th:class="${kqXs.daiXoSo.nameLottery + kqXs.dateLottery}" th:text="${#strings.substring(kqXs.g43,3,5)}"/>
+                        </div>
+                        <div class="kqLoTo">
+                            <span th:class="${kqXs.daiXoSo.nameLottery + kqXs.dateLottery}" th:text="${#strings.substring(kqXs.g44,3,5)}"/>
+                            <span th:class="${kqXs.daiXoSo.nameLottery + kqXs.dateLottery}" th:text="${#strings.substring(kqXs.g45,3,5)}"/>
+                            <span th:class="${kqXs.daiXoSo.nameLottery + kqXs.dateLottery}" th:text="${#strings.substring(kqXs.g46,3,5)}"/>
+                            <span th:class="${kqXs.daiXoSo.nameLottery + kqXs.dateLottery}" th:text="${#strings.substring(kqXs.g47,3,5)}"/>
+                            <span th:class="${kqXs.daiXoSo.nameLottery + kqXs.dateLottery}" th:text="${#strings.substring(kqXs.g31,3,5)}"/>
+                            <span th:class="${kqXs.daiXoSo.nameLottery + kqXs.dateLottery}" th:text="${#strings.substring(kqXs.g32,3,5)}"/>
+                            <span th:class="${kqXs.daiXoSo.nameLottery + kqXs.dateLottery}" th:text="${#strings.substring(kqXs.g2,3,5)}"/>
+                            <span th:class="${kqXs.daiXoSo.nameLottery + kqXs.dateLottery}" th:text="${#strings.substring(kqXs.g1,3,5)}"/>
+                            <span th:class="${kqXs.daiXoSo.nameLottery+ kqXs.dateLottery +' text-danger'}" th:text="${#strings.substring(kqXs.db,4,6)}"/>
+                        </div>
+                        <!-- bang table chua noi dung loto-->
+                        <div class="table-responsive">
+                            <table class="table table-bordered ">
+                                <thead>
+                                <tr>
+                                    <th scope="col" style="background-color:#6f7677;color:white">Đầu</th>
+                                    <th scope="col" style="background-color:#6f7677;color:white">Lô Tô</th>
+                                    <th scope="col" style="background-color:#6f7677;color:white">Đuôi</th>
+                                    <th scope="col" style="background-color:#6f7677;color:white">Lô Tô</th>
+                                </tr>
+                                </thead>
+                                <!-- the tbody se chua noi dung the sau khi load trang bang js -->
+                                <tbody th:id="${kqXs.daiXoSo.nameLottery + kqXs.dateLottery}">
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </di>
+
+    <!-- slide right -->
+    <div class="slide__right">
+        <div class="container__content__slideRight">
+            <!-- div container chua ui date picker-->
+            <div id="datePicker-container">
+                <h6>Xổ Số Theo Ngày</h6>
+            </div>
+
+        </div>
+        <div class="container__content__slideRight" style="margin-top:0.5rem">
+            <!-- form chua thong tin do ve so-->
+            <div id="doVe">
+                <h6>Dò Kết Quả</h6>
+                <form action="#" th:action="@{/us/do-ket-qua}" method="get" class="form-doSo">
+                    <div class="content--form">
+                        <span>Bộ số </span>
+                        <input type="number" name="boSo" value="" placeholder=" nhập 6 số (*)" class="boSo--doSo">
+                    </div>
+                    <div class="content--form">
+                        <span>Ngày </span>
+                        <input type="date" name="date" value="" class="date__doSo">
+                    </div>
+                    <div class="content--form">
+                        <span>Tỉnh ,tp </span>
+                        <select name="tinhThanh" id="tinhThanh__doSo" >
+                            <option th:if="${#lists.size(daiXoSoList) >0}" th:each="theDai:${daiXoSoList}"
+                                    th:text="${theDai.nameLottery}" th:value="${theDai.nameLottery}"/>
+                        </select>
+                    </div>
+
+
+                    <div class="content--form--button">
+                        <button class="btn btn-danger" type="submit" id="btn__doSo">Dò kết quả</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- phan footer -->
+<div class="container__footer">
+    <div>Xổ Số Vịt Ù</div>
+    <div>0985913723</div>
+</div>
+
+
+<!-- show datepicker-->
+<script th:src="@{/js/trangchu/date-picker.js}"></script>
+<!-- show-header-radio-table.js -->
+<script th:src="@{/js/trangchu/show-header-radio-table.js}"></script>
+<!-- js show dau duoi lo to-->
+<script th:src="@{/js/trangchu/show_lo_to_dau_duoi.js}"></script>
+<!-- js xu ly checkbox chuc nang day du, 2 so , 3 so -->
+<script th:src="@{/js/trangchu/daydu-2so-3so.js}"></script>
+<!-- js xu ly hien thi ngay -->
+<script th:src="@{/js/trangchu/format-day-month-year.js}"></script>
+<!-- js xu ly search ten dai va ngay trong the select -->
+<script th:src = "@{/js/trangchu/search-by-ten-dai-and-date.js}"></script>
+<!-- js xử lý validation form dò số -->
+<script th:src="@{/js/trangchu/validation-form-do-so.js}"></script>
+<!-- js xử lý ẩn slide bar mobile -->
+<script th:src="@{/js/trangchu/mobile-slide-bar.js}"></script>
+</body>
+</html>

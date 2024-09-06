@@ -1,0 +1,31 @@
+#container-pw{
+    display:flex;
+    align-items:center;
+}
+#container-pw input{
+    display:block;
+    width:100%;
+    position:relative;
+    z-index:0;
+    overflow:hidden;
+
+}
+#container-pw #icon-eye,
+#container-pw #icon-eye-slash{
+    position:absolute;
+    padding:0 0.5rem;
+    right:0;
+    vertical-align:middle;
+    z-index:1;
+}
+#container-pw #icon-eye:hover,
+#container-pw #icon-eye-slash:hover{
+    opacity:0.8;
+    cursor:pointer;
+}
+/* Ẩn nút tăng giảm trên trình duyệt Chrome */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0; /* Optional - if you want to remove the margin as well */
+}
